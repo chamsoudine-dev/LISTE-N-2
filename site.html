@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Liste N2 – Ensemble, Construisons Notre Avenir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy-deep: #050b18;
+      --navy: #0a1628;
+      --navy-light: #152b4a;
+      --gold: #f5c518;
+      --gold-bright: #ffd700;
+      --gold-dark: #c5a000;
+      --white: #ffffff;
+      --glass: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --accent-gradient: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--navy-deep);
+      color: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ===== BACKGROUND EFFECTS ===== */
+    #bg-glow {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(245, 197, 24, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(26, 58, 107, 0.2) 0%, transparent 40%);
+    }
+
+    #particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed;
+      top: 20px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: 90%;
+      max-width: 1200px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 30px;
+      background: rgba(10, 22, 40, 0.7);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .nav-logo {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--white); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav ul li a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      opacity: 0.8;
+    }
+
+    nav ul li a:hover { color: var(--gold); opacity: 1; }
+
+    /* ===== HERO SECTION ===== */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 5% 60px;
+      overflow: hidden;
+    }
+
+    .hero-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 50px;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .hero-content {
+      animation: fadeInSide 1s ease-out;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--glass);
+      padding: 8px 16px;
+      border-radius: 30px;
+      border: 1px solid var(--glass-border);
+      margin-bottom: 25px;
+      backdrop-filter: blur(5px);
+    }
+
+    .hero-badge .dot {
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--gold);
+      animation: pulse 2s infinite;
+    }
+
+    .hero-badge span {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .hero-title {
+      font-family: 'Syncopate', sans-serif;
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 25px;
+    }
+
+    .hero-title span.accent {
+      display: block;
+      color: var(--gold);
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 40px;
+      max-width: 600px;
+    }
+
+    .hero-image-wrapper {
+      position: relative;
+      animation: fadeInScale 1.2s ease-out;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 30px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      border: 1px solid var(--glass-border);
+      transform: perspective(1000px) rotateY(-10deg);
+      transition: transform 0.5s ease;
+    }
+
+    .hero-image:hover {
+      transform: perspective(1000px) rotateY(0deg);
+    }
+
+    .hero-image-bg {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%; height: 120%;
+      background: radial-gradient(circle, rgba(245, 197, 24, 0.1) 0%, transparent 70%);
+      z-index: -1;
+    }
+
+    /* ===== COUNTDOWN SECTION ===== */
+    #countdown-section {
+      background: var(--navy);
+      padding: 100px 5%;
+      text-align: center;
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .countdown-title {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 50px;
+      opacity: 0.8;
+    }
+
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .countdown-box {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      padding: 30px;
+      border-radius: 20px;
+      min-width: 140px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease;
+    }
+
+    .countdown-box:hover {
+      transform: translateY(-10px);
+      border-color: var(--gold);
+    }
+
+    .countdown-value {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .countdown-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /* ===== PROGRAMME SECTION ===== */
+    #programme {
+      padding: 100px 5%;
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 70px;
+    }
+
+    .section-title {
+      font-family: 'Syncopate', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .section-subtitle {
+      color: var(--gold);
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    .prog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .prog-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      padding: 40px;
+      border-radius: 24px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .prog-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 4px;
+      background: var(--accent-gradient);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .prog-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      border-color: rgba(245, 197, 24, 0.4);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .prog-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .prog-icon {
+      font-size: 2.5rem;
+      margin-bottom: 25px;
+      display: inline-block;
+    }
+
+    .prog-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--gold);
+    }
+
+    .prog-card p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent-gradient);
+      color: var(--navy-deep);
+      box-shadow: 0 10px 20px rgba(245, 197, 24, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(245, 197, 24, 0.4);
+      filter: brightness(1.1);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid var(--glass-border);
+      margin-left: 20px;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      background: var(--glass);
+      color: var(--gold);
+    }
+
+    /* ===== VOTE BANNER ===== */
+    #vote-banner {
+      padding: 120px 5%;
+      text-align: center;
+      background: radial-gradient(circle at 50% 50%, var(--navy-light) 0%, var(--navy-deep) 100%);
+    }
+
+    .vote-n2 {
+      font-family: 'Syncopate', sans-serif;
+      font-size: clamp(5rem, 15vw, 12rem);
+      font-weight: 700;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--gold);
+      line-height: 1;
+      margin-bottom: 20px;
+      opacity: 0.3;
+      transition: opacity 0.5s ease;
+    }
+
+    #vote-banner:hover .vote-n2 {
+      opacity: 1;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 60px 5% 30px;
+      background: var(--navy-deep);
+      border-top: 1px solid var(--glass-border);
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-family: 'Syncopate', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .copyright {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.75rem;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.5; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeInSide {
+      from { opacity: 0; transform: translateX(-50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.9) rotateY(-20deg); }
+      to { opacity: 1; transform: scale(1) rotateY(-10deg); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 992px) {
+      .hero-container { grid-template-columns: 1fr; text-align: center; }
+      .hero-image-wrapper { order: -1; }
+      .hero-image { max-width: 400px; transform: none; margin: 0 auto; }
+      .hero-image:hover { transform: translateY(-10px); }
+      .btn-outline { margin: 20px 0 0 0; }
+      nav ul { display: none; }
+    }
+
+  </style>
+</head>
+<body>
+
+<div id="bg-glow"></div>
+<canvas id="particles"></canvas>
+
+<nav>
+  <a href="#" class="nav-logo">LISTE <span>N2</span></a>
+  <ul>
+    <li><a href="#programme">Programme</a></li>
+    <li><a href="#countdown-section">Élections</a></li>
+    <li><a href="#vote-banner">Voter</a></li>
+  </ul>
+  <a href="#vote-banner" class="btn btn-primary" style="padding: 10px 25px; font-size: 0.8rem;">Votez N2</a>
+</nav>
+
+<section id="hero">
+  <div class="hero-container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="dot"></div>
+        <span>Élections Universitaires 2026</span>
+      </div>
+      <h1 class="hero-title">
+        Ensemble,<br>Construisons<br>
+        <span class="accent">Notre Avenir !</span>
+      </h1>
+      <p class="hero-description">
+        Une vision moderne, un engagement sincère et une action concrète pour porter les aspirations de chaque étudiant de l'Université Islamique au Niger.
+      </p>
+      <div class="hero-actions">
+        <a href="#vote-banner" class="btn btn-primary">✓ Votez Liste N2</a>
+        <a href="#programme" class="btn btn-outline">Notre Programme</a>
+      </div>
+    </div>
+    <div class="hero-image-wrapper">
+      <div class="hero-image-bg"></div>
+      <img src="l.jpeg" alt="Candidat Liste N2" class="hero-image">
+    </div>
+  </div>
+</section>
+
+<div id="countdown-section">
+  <p class="countdown-title">⏱ LE JOUR DU VOTE APPROCHE</p>
+  <div class="countdown-grid">
+    <div class="countdown-box scroll-reveal">
+      <span class="countdown-value" id="cd-days">--</span>
+      <span class="countdown-label">Jours</span>
+    </div>
+    <div class="countdown-box scroll-reveal">
+      <span class="countdown-value" id="cd-hours">--</span>
+      <span class="countdown-label">Heures</span>
+    </div>
+    <div class="countdown-box scroll-reveal">
+      <span class="countdown-value" id="cd-minutes">--</span>
+      <span class="countdown-label">Minutes</span>
+    </div>
+    <div class="countdown-box scroll-reveal">
+      <span class="countdown-value" id="cd-seconds">--</span>
+      <span class="countdown-label">Secondes</span>
+    </div>
+  </div>
+</div>
+
+<section id="programme">
+  <div class="section-header">
+    <p class="section-subtitle">Notre Vision</p>
+    <h2 class="section-title reveal">Le Programme <span style="color: var(--gold);">N2</span></h2>
+  </div>
+  <div class="prog-grid">
+    <div class="prog-card reveal">
+      <span class="prog-icon">💡</span>
+      <h3>Des Idées Pour Innover</h3>
+      <p>Proposer des solutions modernes et créatives pour améliorer la vie étudiante à l'UIN et relever les défis académiques de demain.</p>
+    </div>
+    <div class="prog-card reveal">
+      <span class="prog-icon">🤝</span>
+      <h3>Du Travail Pour Agir</h3>
+      <p>Concrétiser nos engagements par des actions tangibles : amélioration des infrastructures, accès aux ressources pédagogiques et numérique.</p>
+    </div>
+    <div class="prog-card reveal">
+      <span class="prog-icon">👥</span>
+      <h3>De l'Unité Pour Réussir</h3>
+      <p>Rassembler toutes les facultés et tous les étudiants autour d'objectifs communs. Notre force, c'est notre unité !</p>
+    </div>
+    <div class="prog-card reveal">
+      <span class="prog-icon">🚀</span>
+      <h3>De l'Ambition</h3>
+      <p>Porter haut les ambitions des étudiants de l'UIN, défendre leurs droits et ouvrir de nouvelles perspectives de développement.</p>
+    </div>
+  </div>
+</section>
+
+<div id="vote-banner">
+  <div class="vote-n2">N2</div>
+  <h2 class="section-title" style="margin-bottom: 40px;">LE CHOIX DE LA RAISON,<br><span style="color: var(--gold);">LE CHOIX DE L'ACTION</span></h2>
+  <a href="#hero" class="btn btn-primary" style="padding: 20px 60px; font-size: 1.2rem;">REJOINDRE LE MOUVEMENT</a>
+  <p style="margin-top: 30px; opacity: 0.5; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">
+    Université Islamique au Niger · OCI · Niamey
+  </p>
+</div>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-logo">LISTE N2</div>
+    <div class="footer-links">
+      <a href="#programme">Programme</a>
+      <a href="#hero">Candidat</a>
+      <a href="https://www.oic-oci.org" target="_blank">Site de l'OCI</a>
+    </div>
+    <p class="copyright">
+      &copy; 2026 Campagne Officielle Liste N2 · UIN Niamey, Niger<br>
+      Ensemble pour un changement positif et durable.
+    </p>
+  </div>
+</footer>
+
+<script>
+  /* ===== PARTICLES ===== */
+  (function(){
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+
+    function resize(){
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function rnd(a, b){ return Math.random()*(b-a)+a; }
+
+    for(let i=0; i<100; i++){
+      particles.push({
+        x: rnd(0, 1), y: rnd(0, 1),
+        vx: rnd(-0.0001, 0.0001), vy: rnd(-0.0005, -0.0001),
+        r: rnd(0.5, 2),
+        alpha: rnd(0.1, 0.5)
+      });
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      particles.forEach(p=>{
+        p.x += p.vx; p.y += p.vy;
+        if(p.x<0) p.x=1; if(p.x>1) p.x=0;
+        if(p.y<0) p.y=1; if(p.y>1) p.y=0;
+        ctx.beginPath();
+        ctx.arc(p.x*W, p.y*H, p.r, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(245, 197, 24, ${p.alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  /* ===== COUNTDOWN - ACTIVATED FOR 3 DAYS ===== */
+  // Date du vote : 23 Avril 2026 à 08h00
+  const electionDate = new Date('2026-04-23T08:00:00').getTime();
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = electionDate - now;
+
+    if (distance < 0) {
+      document.querySelectorAll('.countdown-value').forEach(el => el.innerText = '00');
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    const dEl = document.getElementById('cd-days');
+    const hEl = document.getElementById('cd-hours');
+    const mEl = document.getElementById('cd-minutes');
+    const sEl = document.getElementById('cd-seconds');
+    
+    if(dEl) dEl.innerText = String(days).padStart(2, '0');
+    if(hEl) hEl.innerText = String(hours).padStart(2, '0');
+    if(mEl) mEl.innerText = String(minutes).padStart(2, '0');
+    if(sEl) sEl.innerText = String(seconds).padStart(2, '0');
+  }
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  /* ===== SCROLL REVEAL ===== */
+  const observerOptions = {
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
